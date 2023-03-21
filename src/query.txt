@@ -152,13 +152,13 @@ join players p on p.id = pt.player_id
 where p.name like 'S%'
 
 -- 8- Selezionare le città in cui è stato giocato il gioco dell'anno del 2018 (36)
-select distinct t.city
+select t.city
 from tournaments t 
 join tournament_videogame tv on t.id = tv.tournament_id 
 join videogames v on tv.videogame_id = v.id 
 join award_videogame av on av.videogame_id = v.id
 join awards a on a.id = av.award_id 
-where av.`year` = 2018;
+where a.id = 1 and av.`year` = 2018;
 
 -- 9- Selezionare i giocatori che hanno giocato al gioco più atteso del 2018 in un torneo del 2019 (3306)
 select p.id
@@ -168,7 +168,7 @@ join tournaments t on t.id = pt.tournament_id
 join tournament_videogame tv on t.id = tv.tournament_id 
 join videogames v on tv.videogame_id =v.id 
 join award_videogame av on av.videogame_id = v.id 
-join awards a on a.id =av.award_id 
+join awards a on a.id = av.award_id
 where a.name = 'gioco più atteso' and av.`year` = 2018 and t.`year` = 2019;
 
 
@@ -185,4 +185,11 @@ limit 1;
 
 -- 12- Selezionare la software house che ha vinto più premi tra il 2015 e il 2016 (software house id : potrebbe uscire 3 o 1, sono entrambi a 3)
 
--- 13- Selezionare le categorie dei videogame i quali hanno una media recensioni inferiore a 1.5 (10)
+-- 13- Selezionare le categorie dei videogame i quali hanno una media recensioni inferiore a 2  (10)
+select distinct  c.name
+from videogames v
+join category_videogame cv on v.id = cv.videogame_id
+join categories c on c.id = cv.category_id
+join reviews r on r.videogame_id = v.id
+group by v.id, c.name
+having avg(r.rating)<2
