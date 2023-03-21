@@ -175,6 +175,11 @@ where a.name = 'gioco più atteso' and av.`year` = 2018 and t.`year` = 2019;
 -- *********** BONUS ***********
 
 -- 10- Selezionare i dati della prima software house che ha rilasciato un gioco, assieme ai dati del gioco stesso (software house id : 5)
+select sh.*, v.*
+from software_houses sh
+join videogames v ON sh.id = v.software_house_id
+order by v.release_date asc
+limit 1;
 
 -- 11- Selezionare i dati del videogame (id, name, release_date, totale recensioni) con più recensioni (videogame id : potrebbe uscire 449 o 398, sono entrambi a 20)
 
