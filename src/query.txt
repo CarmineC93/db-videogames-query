@@ -55,12 +55,18 @@ WHERE rating = 5;
 -- *********** BONUS ***********
 
 -- 11- Selezionare il numero e la media delle recensioni per il videogioco con ID = 412 (review number = 12, avg_rating = 3.16 circa)
+select count(r.id), avg(r.rating) 
+from reviews r 
+join videogames v on v.id = r.videogame_id 
+where v.id = 412
 
 -- 12- Selezionare il numero di videogame che la software house con ID = 1 ha rilasciato nel 2018 (13)
-
+select count(v.id)
+from videogames v 
+WHERE software_house_id = 1
+and YEAR(release_date) = 2018;
 
 -- GROUP BY
-
 -- 1- Contare quante software house ci sono per ogni paese (3)
 select sh.country, count(*)
 from software_houses sh
@@ -106,12 +112,10 @@ inner join videogames v2 on v2.id = tv.videogame_id
 where t.`year` = 2016;
 
 -- 3- Mostrare le categorie di ogni videogioco (1718)
-select count(c.*), v.name
+select v.id, c.name
 from categories c 
-join category_videogame cv on cv.videogame_id = c.id
-join videogames v on v.id = cv.videogame_id 
-group by 
-																-- ????????????????
+join category_videogame cv on cv.category_id = c.id
+join videogames v on v.id = cv.videogame_id
 
 
 -- 4- Selezionare i dati di tutte le software house che hanno rilasciato almeno un gioco dopo il 2020, mostrandoli una sola volta (6)
